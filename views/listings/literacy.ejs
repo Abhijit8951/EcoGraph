@@ -1,0 +1,66 @@
+<main class="max-w-5xl mx-auto p-6">
+    <!-- Section 1: Introduction -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-green-500 border-b-2 border-green-500 pb-2">What is Financial Literacy?</h2>
+        <p class="mt-4">Financial literacy is the ability to understand and effectively use various financial skills, including personal financial management, budgeting, and investing.</p>
+    </section>
+
+    <!-- Section 2: Key Concepts -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-green-500 border-b-2 border-green-500 pb-2">Key Concepts</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h3 class="text-xl font-bold text-green-500"><a href="https://corporatefinanceinstitute.com/resources/fpa/budgeting/" target="_blank">Budgeting</a></h3>
+                <p class="mt-2">Learn how to create and stick to a budget to manage your income and expenses.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h3 class="text-xl font-bold text-green-500">Saving</h3>
+                <p class="mt-2">Understand the importance of saving money and how to build an emergency fund.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h3 class="text-xl font-bold text-green-500">Investing</h3>
+                <p class="mt-2">Discover the basics of investing and how to grow your wealth over time.</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+                <h3 class="text-xl font-bold text-green-500">Debt Management</h3>
+                <p class="mt-2">Learn strategies to manage and pay off debt effectively.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Interactive Calculator -->
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-green-500 border-b-2 border-green-500 pb-2">Savings Calculator</h2>
+        <p class="mt-4">Calculate how much you can save over time with compound interest.</p>
+        <form id="savingsForm" class="bg-white p-6 rounded-lg shadow mt-6 space-y-4">
+            <div>
+                <label for="initialAmount" class="block font-bold">Initial Amount (₹):</label>
+                <input type="number" id="initialAmount" class="w-full p-2 border rounded" required>
+            </div>
+            <div>
+                <label for="monthlyContribution" class="block font-bold">Monthly Contribution (₹):</label>
+                <input type="number" id="monthlyContribution" class="w-full p-2 border rounded" required>
+            </div>
+            <div>
+                <label for="interestRate" class="block font-bold">Annual Interest Rate (%):</label>
+                <input type="number" id="interestRate" class="w-full p-2 border rounded" required>
+            </div>
+            <div>
+                <label for="years" class="block font-bold">Number of Years:</label>
+                <input type="number" id="years" class="w-full p-2 border rounded" required>
+            </div>
+            <button type="submit" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition">Calculate</button>
+        </form>
+        <div id="result" class="mt-6 text-center font-bold"></div>
+    </section>
+
+    <!-- Section 4: Resources -->
+    <section>
+        <h2 class="text-2xl font-bold text-green-500 border-b-2 border-green-500 pb-2">Resources</h2>
+        <ul class="list-disc pl-6 mt-4 space-y-2">
+            <li><a href="https://www.investopedia.com/financial-literacy-5075557" target="_blank" class="text-green-500 hover:underline">Investopedia: Financial Literacy</a></li>
+            <li><a href="https://www.mymoney.gov" target="_blank" class="text-green-500 hover:underline">MyMoney.gov</a></li>
+            <li><a href="https://www.nationaldebtrelief.com/financial-literacy/" target="_blank" class="text-green-500 hover:underline">National Debt Relief: Financial Literacy</a></li>
+        </ul>
+    </section>
+</main>
