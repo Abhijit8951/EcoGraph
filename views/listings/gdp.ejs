@@ -1,0 +1,112 @@
+
+<!-- <div class="d-flex flex-column justify-content-between bg-light p-3" style="width: 200px;">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link text-gray-600 hover:text-blue-600" href="/gdp">GDP Per Year</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-gray-600 hover:text-blue-600" href="#">Financial Planning</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-gray-600 hover:text-blue-600" href="#">Financial Literacy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-gray-600 hover:text-blue-600" href="#">Inflation Per Year</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="container bg-white p-4 rounded shadow-sm flex-grow-1">
+    <h1 class="text-center text-dark">India's GDP Per Year (Past 10 Years)</h1>
+    <canvas id="gdpChart" class="mt-4"></canvas>
+</div> -->
+
+
+
+<div class="flex h-auto w-full">
+  <!-- Navbar -->
+  <div class="w-60 h-full flex flex-col justify-between  mr-16">
+    <ul class="flex flex-col space-y-4 h-full w-full">
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="/gdp">GDP Per Year</a>
+      </li>
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="#">Financial Planning</a>
+      </li>
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="/literacy">Financial Literacy</a>
+      </li>
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="#">Inflation Per Year</a>
+      </li>
+    </ul>
+  </div>
+  <!-- Content Area -->
+  <!-- <div class="flex-grow h-full bg-gray-100 w-full"> -->
+    <div class="container bg-white p-4 rounded shadow-sm flex-grow-1 mt-10">
+        <h1 class="text-center text-dark">India's GDP Per Year (Past 10 Years)</h1>
+        <canvas id="gdpChart" class="mt-4"></canvas>
+    </div>
+  <!-- </div> -->
+</div>
+
+
+
+
+
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Sample data for India's GDP for the past 10 years (in billions USD)
+    const years = ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022'];
+    const gdp = [1860, 2040, 2100, 2290, 2650, 2702, 2835, 2674, 3167, 3353]; // GDP in billions USD
+
+    // Get the canvas element
+    const ctx = document.getElementById('gdpChart').getContext('2d');
+
+    // Create the chart
+    const gdpChart = new Chart(ctx, {
+        type: 'bar', // Use 'bar' for a bar chart
+        data: {
+            labels: years, // Years on the Y-axis
+            datasets: [{
+                label: 'GDP (in billions USD)',
+                data: gdp, // GDP values on the X-axis
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Bar color
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Switches the chart to have the Y-axis as the primary axis
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'GDP (in billions USD)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Year'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                }
+            }
+        }
+    });
+    </script>

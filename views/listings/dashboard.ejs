@@ -1,14 +1,134 @@
-<ul class="nav flex-column">
-    <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="#">Active</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-    </li>
-  </ul>
+<div class="flex h-screen w-full">
+  <!-- Navbar -->
+  <div class="w-60 h-full flex flex-col justify-between mr-16">
+    <ul class="flex flex-col space-y-4 h-full w-full">
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="/gdp">GDP Per Year</a>
+      </li>
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="#">Financial Planning</a>
+      </li>
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="/literacy">Financial Literacy</a>
+      </li>
+      <li class="nav-item w-full">
+          <a class="nav-link text-gray-600 hover:text-blue-600 block w-full text-center" href="#">Inflation Per Year</a>
+      </li>
+    </ul>
+  </div>
+  <!-- Content Area -->
+  <div class="flex-grow h-full bg-gray-100 w-full">
+    <section class="p-12 w-full">
+      <h2 class="text-3xl font-bold text-black mb-6">Market Data</h2>
+      <div id="market-data" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <% marketData.forEach(stock => { %>
+              <div class="bg-white p-6 rounded-lg shadow-md" data-symbol="<%= stock.symbol %>">
+                  <h3 class="text-2xl font-bold text-black"><%= stock.shortName %> (<%= stock.symbol %>)</h3>
+                  <p class="text-gray-600">Price: $<span class="price"><%= stock.regularMarketPrice %></span></p>
+                  <p class="text-gray-600">Change: <span class="change"><%= stock.regularMarketChange %></span> (<span class="change-percent"><%= stock.regularMarketChangePercent %></span>%)</p>
+              </div>
+          <% }); %>
+      </div>
+    </section>
+    <button class="fixed bottom-4 right-4 bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-blue-700 transition" data-toggle="modal" data-target="#aiModal">
+      Ask AI...
+    </button>
+  </div>
+</div>
+
+<div class="modal fade" id="aiModal" tabindex="-1" aria-labelledby="aiModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aiModalLabel">Ask AI</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="chat-box">
+          <div class="messages" id="messages" style="height: 300px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 5px;"></div>
+          <div class="input-group mt-3">
+            <input type="text" id="userInput" class="form-control" placeholder="Type your question...">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" id="sendButton">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('sendButton').addEventListener('click', async () => {
+    const userInput = document.getElementById('userInput').value;
+    if (userInput.trim() !== '') {
+      const messages = document.getElementById('messages');
+      const userMessage = document.createElement('div');
+      userMessage.className = 'user-message';
+      userMessage.style = 'background-color: #007bff; color: white; padding: 10px; border-radius: 5px; margin-bottom: 10px;';
+      userMessage.textContent = userInput;
+      messages.appendChild(userMessage);
+
+      // Scroll to the bottom of the messages
+      messages.scrollTop = messages.scrollHeight;
+
+      // Clear input
+      document.getElementById('userInput').value = '';
+
+      // Send the message to the AI API
+      try {
+        const response = await fetch('/api/ask-ai', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ prompt: userInput })
+        });
+        const data = await response.json();
+
+        // Display AI response
+        const aiMessage = document.createElement('div');
+        aiMessage.className = 'ai-message';
+        aiMessage.style = 'background-color: #f1f1f1; color: black; padding: 10px; border-radius: 5px; margin-bottom: 10px;';
+        aiMessage.textContent = data.response;
+        messages.appendChild(aiMessage);
+
+        console.log('AI response:', data.response);
+
+        // Scroll to the bottom of the messages
+        messages.scrollTop = messages.scrollHeight;
+      } catch (error) {
+        console.error('Error generating AI response:', error);
+      }
+    }
+  });
+
+  async function fetchMarketData() {
+    try {
+      const response = await fetch('/api/market-data');
+      const marketData = await response.json();
+      updateMarketData(marketData);
+    } catch (error) {
+      console.error('Error fetching market data:', error);
+    }
+  }
+
+  function updateMarketData(marketData) {
+    marketData.forEach(stock => {
+      const stockElement = document.querySelector(`[data-symbol="${stock.symbol}"]`);
+      if (stockElement) {
+        stockElement.querySelector('.price').textContent = stock.regularMarketPrice;
+        stockElement.querySelector('.change').textContent = stock.regularMarketChange;
+        stockElement.querySelector('.change-percent').textContent = stock.regularMarketChangePercent;
+      }
+    });
+  }
+
+  // Fetch market data every 30 seconds
+  setInterval(fetchMarketData, 30000);
+
+  // Initial fetch
+  fetchMarketData();
+</script>
