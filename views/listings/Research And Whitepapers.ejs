@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle || "Research and Whitepapers" %></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1><%= headerTitle || "Research and Whitepapers" %></h1>
+        <p><%= headerDescription || "Explore exclusive market reports, industry thought leadership, and historical data analysis." %></p>
+    </header>
+
+    <main>
+        <!-- Exclusive Market Reports -->
+        <section class="research-section">
+            <h2>Exclusive Market Reports</h2>
+            <div class="cards">
+                <% marketReports.forEach(report => { %>
+                <div class="card">
+                    <h3><%= report.title %></h3>
+                    <p><%= report.description %></p>
+                    <a href="<%= report.link %>" class="btn">Download Report</a>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+
+        <!-- Industry Thought Leadership -->
+        <section class="research-section">
+            <h2>Industry Thought Leadership</h2>
+            <div class="cards">
+                <% thoughtLeadership.forEach(item => { %>
+                <div class="card">
+                    <h3><%= item.title %></h3>
+                    <p><%= item.description %></p>
+                    <a href="<%= item.link %>" class="btn">Read More</a>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+
+        <!-- Historical Data Analysis -->
+        <section class="research-section">
+            <h2>India's Decades Of Economic Survey</h2>
+            <div class="cards">
+                <% historicalData.forEach(data => { %>
+                <div class="card">
+                    <h3><%= data.title %></h3>
+                    <p><%= data.description %></p>
+                    <a href="<%= data.link %>" class="btn">View Analysis</a>
+                </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; <%= currentYear || 2023 %> Research and Whitepapers. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
